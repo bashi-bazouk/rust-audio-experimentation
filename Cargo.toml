@@ -1,0 +1,19 @@
+[package]
+name = "audio"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+include_dir = "0.7.4"
+
+# Audio
+cpal = "0.15.3"
+minimp3_fixed = "0.5.3"
+rubato = "0.16.1"
+# symphonia-core = "0.5.4"
+# symphonia = "0.5.4"
+
+# Images and Windowing
+image = "0.25.4"
+winit = { version = "0.30.5", features = ["rwh_05"]}
+pixels = "0.14.0"
