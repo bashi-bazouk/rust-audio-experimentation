@@ -99,7 +99,6 @@ fn load_and_play_mp3(path: &str) {
     let mut output = vec!{};
 
     println!("Resampling.");
-    let mut current_offset = 0;
     loop {
         println!("Looping resampling. {} samples left", channel_data[0].len());
         let chunk_size = resampler.input_frames_next();
@@ -163,7 +162,7 @@ fn load_and_play_mp3(path: &str) {
         None
     ).unwrap();
 
-    let foo = stream.play().unwrap();
+    stream.play().unwrap();
 
     loop {
         drop(finished_condition2.wait_while(finished2.lock().unwrap(), |fini: &mut bool| {
