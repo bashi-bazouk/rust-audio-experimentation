@@ -166,25 +166,12 @@ fn load_and_play_mp3(path: &str) {
     let foo = stream.play().unwrap();
 
     loop {
-        finished_condition2.wait_while(finished2.lock().unwrap(), |fini: &mut bool| {
+        let _ = finished_condition2.wait_while(finished2.lock().unwrap(), |fini: &mut bool| {
             return !*fini;
-        }).expect("TODO: panic message");
+        }).expect("Something went wrong evaluating the conditional finished variable.");
         println!("Finished!");
         break;
     }
-}
-
-fn stream_mp3(path: &str) {
-
-    // Use cpal to get the target device configuration.
-    let host = cpal::default_host();
-    let device = host
-        .default_output_device()
-        .expect("no output device available");
-    println!("Device! {}", device.name().unwrap());
-
-    let supported_config = device.default_output_config().unwrap();
-    let target_sample_rate = supported_config.sample_rate().0 as i32;
 }
 
 fn main() {
@@ -192,5 +179,5 @@ fn main() {
 
     let h : JoinHandle<()> = spawn(|| load_and_play_mp3("assets/Sounds/Music/006- Earthbound - Choose a File.mp3"));
 
-    h.join();
+    h.join().expect("Failed to join thread.");
 }
