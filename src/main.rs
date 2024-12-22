@@ -166,9 +166,9 @@ fn load_and_play_mp3(path: &str) {
     let foo = stream.play().unwrap();
 
     loop {
-        let _ = finished_condition2.wait_while(finished2.lock().unwrap(), |fini: &mut bool| {
+        drop(finished_condition2.wait_while(finished2.lock().unwrap(), |fini: &mut bool| {
             return !*fini;
-        }).expect("Something went wrong evaluating the conditional finished variable.");
+        }).expect("Something went wrong evaluating the conditional finished variable."));
         println!("Finished!");
         break;
     }
